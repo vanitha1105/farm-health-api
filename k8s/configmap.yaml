@@ -1,0 +1,11 @@
+apiVersion: v1                 # Kubernetes core API version
+kind: ConfigMap                # Defines a ConfigMap resource (used for non-sensitive configuration)
+
+metadata:
+  name: farm-health-config     # Name of the ConfigMap
+  namespace: flox-farm         # Namespace where this ConfigMap will be created
+
+data:
+  APP_VERSION: "0.1.0"         # Application version (can be injected as environment variable)
+  ENVIRONMENT: "production"    # Environment identifier (e.g., dev, staging, production)
+  LOG_LEVEL: "info"            # Logging level for the application (debug, info, warning, error)

@@ -1,0 +1,71 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+venv/
+.env/
+.venv/
+env/
+
+# Logs
+*.log
+
+# Environment variables / secrets
+.env
+.env.*
+*.pem
+*.key
+# Git
+.git
+.gitignore
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments (never copy local venv)
+.venv/
+venv/
+env/
+ENV/
+
+# Tests
+tests/
+pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+
+# Docs
+docs/
+
+# Local config
+.env
+.env.*
+docker-compose*
+*.md
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+build/
+dist/
+*.egg-info/

@@ -1,0 +1,52 @@
+apiVersion: apps/v1              # API version for Deployment resources
+kind: Deployment                 # Defines a Deployment (manages ReplicaSets and Pods)
+
+metadata:
+  name: farm-health-api          # Name of the Deployment
+  namespace: flox-farm           # Namespace where it will be created
+
+spec:
+  replicas: 2                    # Number of pod replicas (high availability)
+
+  selector:
+    matchLabels:
+      app: farm-health-api       # Must match pod template labels
+
+  template:
+    metadata:
+      labels:
+        app: farm-health-api     # Label applied to Pods (used by selector & Service)
+
+    spec:
+      containers:
+        - name: farm-health-api  # Container name inside the Pod
+          image: flox/farm-health-api:0.1.0  # Docker image with tag
+
+          ports:
+            - containerPort: 8000 # Port exposed by the container
+
+          envFrom:
+            - configMapRef:
+                name: farm-health-config     # Import environment variables from ConfigMap
+
+          resources:
+            requests:
+              cpu: "100m"         # Minimum CPU guaranteed to the container
+              memory: "128Mi"     # Minimum memory guaranteed to the container
+            limits:
+              cpu: "250m"         # Maximum CPU the container can use
+              memory: "256Mi"     # Maximum memory the container can use
+
+          livenessProbe:
+            httpGet:
+              path: /health       # Endpoint used to check container health
+              port: 8000
+            initialDelaySeconds: 10 # Delay before first liveness check
+            periodSeconds: 20     # Frequency of health checks
+
+          readinessProbe:
+            httpGet:
+              path: /ready        # Endpoint used to determine if app is ready
+              port: 8000
+            initialDelaySeconds: 5  # Delay before first readiness check
+            periodSeconds: 10      # Frequency of readiness checks
