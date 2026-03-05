@@ -185,17 +185,70 @@ http://localhost:8000/docs
 
 # 🧪 Using the Health Check Script
 
-Make executable:
+## Health Check Script
+
+This repository includes a Bash script that checks the health of one or more services by calling their `/health` endpoints.  
+The script verifies the HTTP response and ensures the service reports `"status": "healthy"`.
+
+### Shebang & Executable
+
+The script includes a shebang so it can be executed directly in Unix/Linux environments:
 
 ```bash
-chmod +x healthcheck.sh
+#!/usr/bin/env bash
 ```
 
-Run:
+Make the script executable before running it:
 
 ```bash
-./healthcheck.sh http://localhost:8000
+chmod +x health-check.sh
 ```
+
+### Usage
+
+```bash
+./health-check.sh [--webhook <url>] [--retries <n>] [--delay <seconds>] <service_url_1> <service_url_2> ...
+```
+
+### Parameters
+
+| Option | Description |
+|------|-------------|
+| `--webhook` | Optional Slack webhook URL to send alerts when a service fails |
+| `--retries` | Number of retry attempts for each service (default: 5) |
+| `--delay` | Delay in seconds between retries (default: 2) |
+
+### Examples
+
+Check multiple services:
+
+```bash
+./health-check.sh http://service1:8000 http://service2:8000
+```
+
+Run with custom retries and delay:
+
+```bash
+./health-check.sh --retries 3 --delay 5 http://service1:8000
+```
+
+Run with Slack notification:
+
+```bash
+./health-check.sh --webhook https://hooks.slack.com/services/XXXX http://service1:8000
+```
+
+### Behaviour
+
+- Calls the `/health` endpoint for each provided service URL.
+- Verifies:
+  - HTTP status code `200`
+  - JSON response contains `"status": "healthy"`
+- Retries failed checks based on configured retry settings.
+- Sends a Slack alert if a webhook is provided and a service fails.
+- Exit codes:
+  - `0` → All services healthy
+  - `1` → One or more services unhealthy
 
 **Exit codes:**
 
