@@ -199,8 +199,11 @@ Run:
 * Add real database connectivity checks
 * Add unit tests
 * Add automatic image tagging from Git commit
-* Improve JSON parsing in script using `jq`
-* Add security scanning (e.g., Trivy)
+* Add **SonarQube analysis stage** for code quality checks  
+* Add **Aqua / Trivy security scanning stage** for Docker image vulnerability scanning  
+* Add **Python lint checks (e.g., flake8 / pylint)** before allowing PR creation or merge  
+* Add **manual approval stage for production deployment** to ensure controlled releases  
+* Implement **Helm or Kustomize based Kubernetes deployment** for better configuration management and environment-specific deployments
 
 ---
 
