@@ -44,6 +44,16 @@ The goal was to show basic DevOps skills including containerization, health moni
 * Uses `python:3.12-slim`
 * Runs as a non-root user for security
 * Includes a Docker `HEALTHCHECK`
+## Base Image Choice
+
+**Base Image:** `python:3.12-slim`
+
+This image was chosen because it provides the latest stable Python version while keeping the image size relatively small.  
+The **slim variant** reduces unnecessary packages, which helps minimize the final container size and reduces the attack surface.
+
+Although `python:3.12-alpine` also produces smaller images, `python:3.12-slim` is based on **Debian with glibc**, which provides better compatibility with many Python libraries and avoids potential build or runtime issues.
+
+Therefore, `python:3.12-slim` offers a good balance between **image size, stability, and compatibility for production environments**.
 
 ---
 
